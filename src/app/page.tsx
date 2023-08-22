@@ -1,7 +1,24 @@
+"use client";
+
 import Image from 'next/image'
 import styles from './page.module.css'
+import { useEffect } from 'react'
+import { io } from "socket.io-client";
+
+let socket
 
 export default function Home() {
+  useEffect(() => socketInitializer(), [])
+
+  const socketInitializer: any = async () => {
+    // await fetch('http://localhost:8080/')
+    socket = io('http://localhost:8081')
+
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
